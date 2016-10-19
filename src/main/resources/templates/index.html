@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: head('DenkAir — Entspannt in die Sonne')"></head>
+<body class="page-home">
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="hero hero-sun">
+    <div class="container">
+        <form class="flight-search" th:action="@{/flights}" method="get">
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <label>Von</label>
+                    <select name="origin" class="form-control">
+                        <option value="">Beliebig</option>
+                        <option th:each="a : ${airports}" th:value="${a.iata}" th:text="|${a.city} (${a.iata})|"></option>
+                    </select>
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label>Nach</label>
+                    <select name="destination" class="form-control">
+                        <option value="">Beliebig</option>
+                        <option th:each="a : ${airports}" th:value="${a.iata}" th:text="|${a.city} (${a.iata})|"></option>
+                    </select>
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label>Datum</label>
+                    <input type="text" name="date" class="form-control"
+                           th:value="${search.date != null ? #temporals.format(search.date, 'yyyy-MM-dd') : ''}">
+                </div>
+                <div class="col-sm-3 form-group">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        <i class="fa fa-search"></i> Suchen
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="hero-overlay-card">
+            <span class="eyebrow">Sommer 2026</span>
+            <h1>Hallo Mallorca!</h1>
+            <p>Ab in den Süden mit DenkAir — Flüge ab 169 € ins Mittelmeer.</p>
+            <a class="btn btn-primary btn-lg" th:href="@{/flights}">Jetzt Flug finden</a>
+        </div>
+    </div>
+</section>
+
+<section class="vorteilswelt">
+    <div class="container">
+        <div class="vorteilswelt-card">
+            <div class="vorteilswelt-copy">
+                <h3>Vorteilswelt für Vielflieger</h3>
+                <p>Sammeln Sie DenkAir-Meilen bei jedem Flug und sichern Sie sich Prämien.</p>
+                <a class="btn btn-primary" href="#">Jetzt kostenlos registrieren</a>
+            </div>
+            <div class="vorteilswelt-stripes"></div>
+        </div>
+    </div>
+</section>
+
+<section class="schnaeppchen">
+    <div class="container">
+        <h2 class="section-title">Günstig in den Urlaub fliegen</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="deal-col-title">Langstrecke</h3>
+                <p class="deal-col-sub">Erleben Sie die weite Welt mit der DenkAir-Langstrecke.</p>
+                <ul class="deal-list">
+                    <li th:each="o, it : ${offers}" th:if="${it.index % 2 == 0}">
+                        <a th:href="@{/flights/{id}(id=${o.id})}">
+                            <span class="deal-dest" th:text="${o.destination.city}"></span>
+                            <span class="deal-price">
+                                ab € <strong th:text="${#numbers.formatDecimal(o.preis, 1, 'POINT', 2, 'COMMA')}"></strong><sup>**</sup>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3 class="deal-col-title">Kurz- und Mittelstrecke</h3>
+                <p class="deal-col-sub">Schnell und günstig an Europas schönste Küsten.</p>
+                <ul class="deal-list">
+                    <li th:each="o, it : ${offers}" th:if="${it.index % 2 == 1}">
+                        <a th:href="@{/flights/{id}(id=${o.id})}">
+                            <span class="deal-dest" th:text="${o.destination.city}"></span>
+                            <span class="deal-price">
+                                ab € <strong th:text="${#numbers.formatDecimal(o.preis, 1, 'POINT', 2, 'COMMA')}"></strong><sup>**</sup>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="banner-tradition">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Urlaub beginnt mit DenkAir.</h2>
+                <p>Seit 2007 bringen wir unsere Gäste sicher in den Süden.
+                   Pünktlich, bequem und mit unserem eigenen Service-Versprechen.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="https://picsum.photos/seed/denkair-tradition/800/500" class="img-responsive">
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

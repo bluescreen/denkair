@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Meine Buchungen — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="customer-bookings">
+    <div class="container">
+        <h1>Meine Buchungen</h1>
+        <p class="lead">Übersicht Ihrer bisherigen Buchungen.</p>
+
+        <table class="table table-striped">
+            <thead>
+            <tr><th>Referenz</th><th>Flug</th><th>Datum</th><th>Status</th><th>Preis</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="b : ${bookings}">
+                <td th:text="${b.referenceCode}">HA-ABCDE</td>
+                <td>
+                    <span th:text="${b.flight.flightNumber}"></span>
+                    (<span th:text="${b.flight.origin.iata}"></span> →
+                     <span th:text="${b.flight.destination.iata}"></span>)
+                </td>
+                <td th:text="${#temporals.format(b.flight.departure, 'dd.MM.yyyy HH:mm')}"></td>
+                <td><span class="label label-success" th:text="${b.status}">CONFIRMED</span></td>
+                <td th:text="|${#numbers.formatDecimal(b.totalPreis,1,'POINT',2,'COMMA')} €|"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

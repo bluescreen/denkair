@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<footer th:fragment="footer" class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h4>DenkAir</h4>
+                <p>Entspannt in die Sonne — mit DenkAir.<br>
+                   Seit 2007 in Hamburg.</p>
+                <p><i class="fa fa-phone"></i> +49 40 555 0000<br>
+                   <i class="fa fa-envelope"></i> service@denkair.de</p>
+            </div>
+            <div class="col-md-3">
+                <h4>Reiseziele</h4>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/ziele/palma-mallorca}">Mallorca</a></li>
+                    <li><a th:href="@{/ziele/antalya}">Antalya</a></li>
+                    <li><a th:href="@{/ziele/gran-canaria}">Gran Canaria</a></li>
+                    <li><a th:href="@{/ziele/kreta}">Kreta</a></li>
+                    <li><a th:href="@{/ziele/hurghada}">Hurghada</a></li>
+                    <li><a th:href="@{/ziele/faro}">Faro</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Service</h4>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/service/check-in}">Online Check-in</a></li>
+                    <li><a th:href="@{/service/gepaeck}">Gepäck</a></li>
+                    <li><a th:href="@{/service/mein-flug}">Mein Flug</a></li>
+                    <li><a th:href="@{/faq}">FAQ</a></li>
+                    <li><a th:href="@{/kontakt}">Kontakt</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Unternehmen</h4>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/karriere}">Karriere</a></li>
+                    <li><a th:href="@{/impressum}">Impressum</a></li>
+                    <li><a th:href="@{/datenschutz}">Datenschutz</a></li>
+                    <li><a th:href="@{/agb}">AGB</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="text-center small">&copy; 2026 DenkAir GmbH &middot; Entspannt in die Sonne</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>

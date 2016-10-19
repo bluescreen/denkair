@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Buchungsbestätigung — DenkAir')"></head>
+<body class="page-booking">
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="booking-confirmation">
+    <div class="container text-center">
+        <i class="fa fa-check-circle text-success" style="font-size: 72px;"></i>
+        <h1>Buchung bestätigt</h1>
+        <p class="lead">
+            Ihre Buchungsnummer lautet <strong th:text="${#httpServletRequest.requestURI.split('/')[-1]}">HA-ABCDE</strong>.
+        </p>
+        <p>Wir haben Ihnen eine Bestätigungsmail gesendet.</p>
+
+        <img src="https://picsum.photos/seed/denkair-confirmation/800/400" class="img-responsive center-block">
+
+        <a class="btn btn-default" th:href="@{/}">Zur Startseite</a>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

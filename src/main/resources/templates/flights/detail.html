@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head(|Flug ${flight.flightNumber} — DenkAir|)"></head>
+<body class="page-flights">
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="flight-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <img th:src="${flight.imageUrl}" class="img-responsive flight-hero">
+            </div>
+            <div class="col-md-5">
+                <h1 th:text="${flight.flightNumber}">HA4021</h1>
+                <p class="route-big">
+                    <strong th:text="${flight.origin.city}">Hamburg</strong> (<span th:text="${flight.origin.iata}">HAM</span>)
+                    <i class="fa fa-long-arrow-right"></i>
+                    <strong th:text="${flight.destination.city}">Palma</strong> (<span th:text="${flight.destination.iata}">PMI</span>)
+                </p>
+                <p>
+                    Abflug: <strong th:text="${#temporals.format(flight.departure, 'dd.MM.yyyy HH:mm')}"></strong><br>
+                    Ankunft: <strong th:text="${#temporals.format(flight.arrival, 'dd.MM.yyyy HH:mm')}"></strong><br>
+                    Flugzeug: <span th:text="${flight.aircraft?.typeCode}"></span>
+                </p>
+                <div class="price-big" th:text="|${#numbers.formatDecimal(flight.preis,1,'POINT',2,'COMMA')} €|">—</div>
+                <p class="seats">Freie Plätze: <strong th:text="${flight.seatsAvailable}">180</strong></p>
+                <a class="btn btn-primary btn-lg" th:href="@{/booking/new(flightId=${flight.id})}">
+                    <i class="fa fa-ticket"></i> Jetzt buchen
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

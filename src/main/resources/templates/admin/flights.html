@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Admin Flüge — DenkAir')"></head>
+<body class="page-admin">
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="admin-dashboard">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 sidebar-admin">
+                <h4>Verwaltung</h4>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Übersicht</a></li>
+                    <li><a th:href="@{/admin/flights}"><i class="fa fa-plane"></i> Flüge</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9 content-admin">
+                <h1>Flüge</h1>
+                <table class="table table-striped">
+                    <thead>
+                    <tr><th>Flugnr.</th><th>Von</th><th>Nach</th><th>Abflug</th><th>Preis</th><th>Frei</th><th>Aktiv</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="f : ${flights}">
+                        <td th:text="${f.flightNumber}">HA4021</td>
+                        <td th:text="${f.origin.iata}">HAM</td>
+                        <td th:text="${f.destination.iata}">PMI</td>
+                        <td th:text="${#temporals.format(f.departure, 'dd.MM.yyyy HH:mm')}"></td>
+                        <td th:text="|${#numbers.formatDecimal(f.preis,1,'POINT',2,'COMMA')} €|"></td>
+                        <td th:text="${f.seatsAvailable}"></td>
+                        <td><i th:class="${f.aktiv ? 'fa fa-check' : 'fa fa-times'}"></i></td>
+                        <td>
+                            <a class="btn btn-xs btn-danger"
+                               th:href="@{/admin/flights/{id}/delete(id=${f.id})}"
+                               onclick="return confirm('Wirklich löschen?')">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

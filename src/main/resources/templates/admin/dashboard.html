@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Admin — DenkAir')"></head>
+<body class="page-admin">
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="admin-dashboard">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 sidebar-admin">
+                <h4>Verwaltung</h4>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Übersicht</a></li>
+                    <li><a th:href="@{/admin/flights}"><i class="fa fa-plane"></i> Flüge</a></li>
+                    <li><a href="/actuator"><i class="fa fa-heartbeat"></i> Actuator</a></li>
+                    <li><a href="/swagger-ui.html"><i class="fa fa-code"></i> Swagger</a></li>
+                    <li><a href="/h2-console"><i class="fa fa-database"></i> H2 Console</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9 content-admin">
+                <h1>Admin Übersicht</h1>
+
+                <div class="row stats">
+                    <div class="col-sm-4">
+                        <div class="stat-card">
+                            <div class="stat-number" th:text="${totalFlights}">0</div>
+                            <div class="stat-label">Flüge</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="stat-card">
+                            <div class="stat-number" th:text="${totalBookings}">0</div>
+                            <div class="stat-label">Buchungen</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="stat-card">
+                            <div class="stat-number" th:text="${totalCustomers}">0</div>
+                            <div class="stat-label">Kunden</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Neueste Buchungen</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr><th>Referenz</th><th>Flug</th><th>Kunde</th><th>Preis</th><th>Erstellt</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="b : ${recentBookings}">
+                        <td th:text="${b.referenceCode}">HA-XXX</td>
+                        <td th:text="${b.flight.flightNumber}">HA4021</td>
+                        <td th:text="|${b.customer.firstName} ${b.customer.lastName}|">Max Mustermann</td>
+                        <td th:text="|${#numbers.formatDecimal(b.totalPreis,1,'POINT',2,'COMMA')} €|"></td>
+                        <td th:text="${#temporals.format(b.createdAt, 'dd.MM.yyyy HH:mm')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

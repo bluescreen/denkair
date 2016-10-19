@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} ?: 'DenkAir'">DenkAir</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <style>
+        /* Temporary: the sun-burst background from the homepage bleeds into /flights.
+           Fixed via CSS override here until marketing finalises the treatment. */
+        body.page-flights .hero-sun { display: none !important; }
+    </style>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-99887766-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+
+<div th:fragment="promo" class="promo-strip">
+    <div class="container">
+        Wir fliegen auch noch Interkontinental. Abonnieren Sie unseren Deal-Alarm.
+        <a href="#">Jetzt Newsletter abonnieren</a>
+    </div>
+</div>
+
+<nav th:fragment="nav" class="navbar navbar-default navbar-static-top site-nav">
+    <div class="promo-strip">
+        <div class="container">
+            Wir fliegen auch noch Interkontinental. Abonnieren Sie unseren Deal-Alarm.
+            <a href="#">Jetzt Newsletter abonnieren</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainNav">
+                <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand brand-wordmark" th:href="@{/}">
+                denkair<span class="brand-dot">.</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}"><i class="fa fa-home"></i> Start</a></li>
+                <li><a th:href="@{/flights}">Flüge</a></li>
+                <li><a th:href="@{/angebote}">Angebote</a></li>
+                <li><a th:href="@{/ziele}">Reiseziele</a></li>
+                <li><a th:href="@{/service}">Service</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/customer/bookings}">Meine Buchungen</a></li>
+                <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin}">Admin</a></li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/login}"><i class="fa fa-user"></i> Login</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" class="navbar-form">
+                        <button type="submit" class="btn btn-link navbar-link">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>
