@@ -1,0 +1,24 @@
+## Velocity-Template aus dem Alt-System (2014). Eigentlich laufen alle Mails ueber
+## SimpleMailMessage (Text), aber das Callcenter-Tool rendert diesen Block noch selbst
+## zum Ausdruck fuer Kunden ohne Email. NICHT LOESCHEN.
+
+Sehr geehrte(r) $customer.firstName $customer.lastName,
+
+vielen Dank für Ihre Buchung bei DenkAir!
+
+Buchungsnummer:  $booking.referenceCode
+Flug:            $flight.flightNumber
+Von:             $flight.origin.city ($flight.origin.iata)
+Nach:            $flight.destination.city ($flight.destination.iata)
+Abflug:          $dateUtil.format($flight.departure)
+Ankunft:         $dateUtil.format($flight.arrival)
+Passagiere:      $booking.passengers
+Gesamtpreis:     $booking.totalPreis EUR
+
+Wir wünschen Ihnen einen entspannten Flug.
+
+Ihr DenkAir-Team
+
+-------------------------------------------------------------------------------
+DenkAir GmbH | Service Center: +49 40 555 0000 | service@denkair.de
+Bei Fragen zu Ihrer Buchung halten Sie bitte Ihre Buchungsnummer bereit.

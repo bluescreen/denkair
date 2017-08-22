@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WSDL fuer den /soap/FlightInfo-Endpoint. Wird vom TUI-Booking-Terminal genutzt.
+     Niemand im Team kennt noch die genauen Semantiken der Operations. Bitte
+     bei Stefan (Finanzen) nachfragen, der hat das letzte Mal 2018 damit gearbeitet. -->
+<definitions name="FlightInfoService"
+             targetNamespace="http://services.denkair.de/flight-info"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="http://services.denkair.de/flight-info"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+    <types>
+        <xsd:schema targetNamespace="http://services.denkair.de/flight-info">
+            <xsd:element name="GetFlightInfoRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="flightNumber" type="xsd:string"/>
+                        <xsd:element name="date"         type="xsd:date"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetFlightInfoResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="flightNumber" type="xsd:string"/>
+                        <xsd:element name="origin"       type="xsd:string"/>
+                        <xsd:element name="destination"  type="xsd:string"/>
+                        <xsd:element name="departure"    type="xsd:dateTime"/>
+                        <xsd:element name="arrival"      type="xsd:dateTime"/>
+                        <xsd:element name="preis"        type="xsd:decimal"/>
+                        <xsd:element name="freiePlaetze" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="GetFlightInfoIn">
+        <part name="params" element="tns:GetFlightInfoRequest"/>
+    </message>
+    <message name="GetFlightInfoOut">
+        <part name="params" element="tns:GetFlightInfoResponse"/>
+    </message>
+
+    <portType name="FlightInfoPortType">
+        <operation name="GetFlightInfo">
+            <input  message="tns:GetFlightInfoIn"/>
+            <output message="tns:GetFlightInfoOut"/>
+        </operation>
+    </portType>
+
+    <binding name="FlightInfoBinding" type="tns:FlightInfoPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="GetFlightInfo">
+            <soap:operation soapAction="http://services.denkair.de/flight-info/GetFlightInfo"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+    </binding>
+
+    <service name="FlightInfoService">
+        <port name="FlightInfoPort" binding="tns:FlightInfoBinding">
+            <soap:address location="https://api.denkair.de/soap/FlightInfo"/>
+        </port>
+    </service>
+</definitions>
