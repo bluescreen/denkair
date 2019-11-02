@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Legacy Spring XML config from the DenkAir-Altsystem era (pre 2016).
+  Still loaded because the Saferpay / FlugInfoBean wiring expects these bean names.
+
+  Author: jens (2014)
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <!-- Saferpay legacy client. Wird per Name "saferpayClient" vom B2B-Webhook gelesen. -->
+    <bean id="saferpayClient" class="de.denkair.booking.legacy.PaymentService"/>
+
+    <!-- FlugInfoService — laeuft als Singleton, nur als Factory-Referenz registriert -->
+    <bean id="flugInfoService" class="de.denkair.fluginfo.FlugInfoService"
+          factory-method="getInstance"/>
+
+    <!-- Alte ThreadLocal-basierte Session, ersetzt durch Spring Session 2019.
+         Bean bleibt fuer Rueckwaertskompatibilitaet mit dem B2B-Portal. -->
+    <bean id="legacyUserContext" class="java.util.HashMap"/>
+
+    <!-- EHCache manager — war mal die Hauptcache, seit 2019 inactive, aber Beans lookup'en ihn. -->
+    <!--
+    <bean id="cacheManager" class="net.sf.ehcache.CacheManager" destroy-method="shutdown">
+        <constructor-arg>
+            <bean class="org.springframework.core.io.ClassPathResource">
+                <constructor-arg value="ehcache.xml"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    -->
+
+</beans>

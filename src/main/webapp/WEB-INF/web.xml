@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  web.xml aus der Pre-Spring-Boot-Zeit (2014). Spring Boot ignoriert das komplett,
+  aber die Build-Pipeline schreit wenn es fehlt, also bleibt's.
+-->
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="3.1">
+
+    <display-name>DenkAir Booking (formerly: DenkAir FlugInfo)</display-name>
+
+    <context-param>
+        <param-name>spring.profiles.default</param-name>
+        <param-value>legacy</param-value>
+    </context-param>
+
+    <!-- Legacy 302 redirect fuer die alten DenkAir-Legacy-URLs. Einige Partner rufen die noch auf. -->
+    <servlet>
+        <servlet-name>legacyRedirect</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>legacyRedirect</servlet-name>
+        <url-pattern>/denkair-legacy/*</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>120</session-timeout>
+    </session-config>
+
+    <!-- JSP-Legacy fuer /admin/old-booking -->
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+
+</web-app>
