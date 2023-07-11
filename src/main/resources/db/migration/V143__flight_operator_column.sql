@@ -1,0 +1,2 @@
+-- V143 — 2024-01-18, jens
+ALTER TABLE flight ADD COLUMN operator VARCHAR(30) DEFAULT 'HA';

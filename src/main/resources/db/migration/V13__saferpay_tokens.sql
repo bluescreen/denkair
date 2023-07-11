@@ -1,0 +1,7 @@
+-- V13 — 2016-06-15, jens
+CREATE TABLE saferpay_token (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    customer_id BIGINT,
+    token VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,8 @@
+-- V10 — 2015-08-04, akin
+CREATE TABLE app_user (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(40) NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE
+);
