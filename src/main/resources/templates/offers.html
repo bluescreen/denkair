@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Angebote — DenkAir')"></head>
+<body class="page-offers">
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="page-header-section">
+    <div class="container">
+        <h1>Angebote</h1>
+        <p class="lead">
+            Die aktuellen Top-Schnäppchen
+            <span th:if="${cheapest}">— ab
+                <strong th:text="|${#numbers.formatDecimal(cheapest,1,'POINT',2,'COMMA')} €|"></strong>
+            </span>.
+        </p>
+    </div>
+</section>
+
+<section class="schnaeppchen">
+    <div class="container">
+        <h2 class="section-title">Alle verfügbaren Flüge</h2>
+        <div class="row">
+            <div class="col-sm-6 col-md-4" th:each="o : ${offers}">
+                <a class="offer-card" th:href="@{/flights/{id}(id=${o.id})}">
+                    <img th:src="${o.imageUrl}" alt="">
+                    <div class="offer-body">
+                        <div class="route">
+                            <span th:text="${o.origin.iata}"></span>
+                            <i class="fa fa-long-arrow-right"></i>
+                            <span th:text="${o.destination.iata}"></span>
+                        </div>
+                        <div class="date" th:text="${#temporals.format(o.departure, 'dd.MM.yyyy')}"></div>
+                        <div class="price">
+                            ab <strong th:text="${#numbers.formatDecimal(o.preis,1,'POINT',2,'COMMA')}"></strong> €
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

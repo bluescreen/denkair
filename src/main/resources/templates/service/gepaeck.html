@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Gepäck — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="page-header-section">
+    <div class="container">
+        <h1>Gepäck</h1>
+        <p class="lead">Freigepäck, Handgepäck, Sondergepäck — alles im Überblick.</p>
+    </div>
+</section>
+
+<section class="flight-detail">
+    <div class="container">
+        <h2 class="section-title">Freigepäck</h2>
+        <table class="table" style="font-size:15px;">
+            <thead>
+            <tr><th>Tarif</th><th>Handgepäck</th><th>Aufgabegepäck</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>Basic</td>        <td>1 × 6 kg</td> <td>—</td></tr>
+            <tr><td>Classic</td>      <td>1 × 8 kg</td> <td>1 × 20 kg</td></tr>
+            <tr><td>Premium</td>      <td>1 × 8 kg + Laptop-Tasche</td> <td>2 × 23 kg</td></tr>
+            <tr><td>Business</td>     <td>2 × 8 kg</td> <td>2 × 32 kg</td></tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title" style="margin-top:50px !important;">Sondergepäck</h2>
+        <p style="font-size:15px; line-height:1.7;">
+            Fahrrad, Surfbrett, Golfbag, Ski &amp; Snowboard, Musikinstrumente, Kinderwagen: Bitte mindestens
+            48 Stunden vor Abflug anmelden. Gebühren finden Sie in unseren
+            <a th:href="@{/agb}">Allgemeinen Beförderungsbedingungen</a>.
+        </p>
+        <p style="font-size:15px; line-height:1.7;">
+            Gefährliche Güter (Spraydosen, Lithium-Akkus ab 160 Wh, etc.) dürfen nicht oder nur mit
+            Sondergenehmigung mitgeführt werden.
+        </p>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

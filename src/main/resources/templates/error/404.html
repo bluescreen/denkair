@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Seite nicht gefunden — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="booking-confirmation" style="background:#fff;">
+    <div class="container text-center">
+        <div style="font-size:96px; font-weight:800; color:#F7A600; line-height:1;">404</div>
+        <h1 style="margin-top:20px;">Diese Seite ist nicht am Gate.</h1>
+        <p class="lead" style="color:#3A3A3A;">Die angeforderte Seite konnte nicht gefunden werden.</p>
+        <p style="margin-top:20px;">
+            <a class="btn btn-primary btn-lg" th:href="@{/}">Zur Startseite</a>
+            <a class="btn btn-default btn-lg" th:href="@{/flights}" style="margin-left:10px;">Flüge suchen</a>
+        </p>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

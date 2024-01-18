@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('FAQ — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="page-header-section">
+    <div class="container">
+        <h1>Häufige Fragen</h1>
+        <p class="lead">Schnelle Antworten zu den wichtigsten Themen.</p>
+    </div>
+</section>
+
+<section class="flight-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <h2 class="section-title">Buchung &amp; Zahlung</h2>
+                <div class="faq-item" style="border-bottom:1px solid #E5E5E5; padding:18px 0;">
+                    <strong style="font-size:16px;">Welche Zahlungsmethoden akzeptieren Sie?</strong>
+                    <p style="margin:8px 0 0; color:#3A3A3A;">Kreditkarte (Visa, Mastercard, Amex), SEPA-Lastschrift, PayPal und für ausgewählte Strecken auch Sofort-Überweisung.</p>
+                </div>
+                <div class="faq-item" style="border-bottom:1px solid #E5E5E5; padding:18px 0;">
+                    <strong style="font-size:16px;">Wann wird meine Buchung bestätigt?</strong>
+                    <p style="margin:8px 0 0; color:#3A3A3A;">Direkt nach erfolgreicher Zahlung erhalten Sie eine Bestätigung per E-Mail mit Ihrer Buchungsnummer (Format <code>HA-ABCDE</code>).</p>
+                </div>
+                <div class="faq-item" style="border-bottom:1px solid #E5E5E5; padding:18px 0;">
+                    <strong style="font-size:16px;">Kann ich eine Buchung umbuchen?</strong>
+                    <p style="margin:8px 0 0; color:#3A3A3A;">Ja, je nach Tarif gebührenfrei oder gegen eine Umbuchungsgebühr. Details unter <a th:href="@{/service/mein-flug}">Mein Flug</a>.</p>
+                </div>
+
+                <h2 class="section-title" style="margin-top:40px !important;">Check-in &amp; Gepäck</h2>
+                <div class="faq-item" style="border-bottom:1px solid #E5E5E5; padding:18px 0;">
+                    <strong style="font-size:16px;">Ab wann kann ich online einchecken?</strong>
+                    <p style="margin:8px 0 0; color:#3A3A3A;">24 Stunden bis 45 Minuten vor Abflug. <a th:href="@{/service/check-in}">Zum Online Check-in</a>.</p>
+                </div>
+                <div class="faq-item" style="border-bottom:1px solid #E5E5E5; padding:18px 0;">
+                    <strong style="font-size:16px;">Wie viel Gepäck ist im Flugpreis enthalten?</strong>
+                    <p style="margin:8px 0 0; color:#3A3A3A;">Tarifabhängig. Freigepäck-Matrix unter <a th:href="@{/service/gepaeck}">Gepäck</a>.</p>
+                </div>
+
+                <h2 class="section-title" style="margin-top:40px !important;">Am Flughafen</h2>
+                <div class="faq-item" style="border-bottom:1px solid #E5E5E5; padding:18px 0;">
+                    <strong style="font-size:16px;">Mein Flug ist annulliert, was nun?</strong>
+                    <p style="margin:8px 0 0; color:#3A3A3A;">Wir buchen Sie automatisch auf die nächste verfügbare Verbindung um oder erstatten den Flugpreis. Rechte nach EU-VO 261/2004. Fragen? <a th:href="@{/kontakt}">Kontakt</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

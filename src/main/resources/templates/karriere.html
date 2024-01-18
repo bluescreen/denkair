@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Karriere — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="hero hero-sun" style="padding:60px 0 120px; background-image:url('https://picsum.photos/seed/denkair-career/1920/600');">
+    <div class="container">
+        <div class="hero-caption">
+            <span class="eyebrow" style="display:inline-block;background:#F7A600;color:#1A1A1A;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;padding:6px 12px;border-radius:2px;margin-bottom:18px;">Karriere</span>
+            <h1>Fliegen Sie mit uns.</h1>
+            <p>Ob an Bord, am Boden oder in der Verwaltung — wir suchen Menschen, die Gäste begeistern.</p>
+        </div>
+    </div>
+</section>
+
+<section class="schnaeppchen">
+    <div class="container">
+        <h2 class="section-title">Offene Stellen</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <a class="offer-card" href="#">
+                    <div class="offer-body" style="padding:24px;">
+                        <div class="route" style="font-size:20px;">Flugbegleiter/in (m/w/d)</div>
+                        <div class="date">Hamburg · Vollzeit</div>
+                        <div class="price" style="margin-top:10px;">Bewerbungsfrist: laufend</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a class="offer-card" href="#">
+                    <div class="offer-body" style="padding:24px;">
+                        <div class="route" style="font-size:20px;">First Officer A320/A321 (m/w/d)</div>
+                        <div class="date">Düsseldorf · Vollzeit</div>
+                        <div class="price" style="margin-top:10px;">Bewerbungsfrist: laufend</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a class="offer-card" href="#">
+                    <div class="offer-body" style="padding:24px;">
+                        <div class="route" style="font-size:20px;">Senior Java Developer (m/w/d)</div>
+                        <div class="date">Hamburg · Vollzeit · Remote möglich</div>
+                        <div class="price" style="margin-top:10px;">Bewerbungsfrist: 31.05.2026</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a class="offer-card" href="#">
+                    <div class="offer-body" style="padding:24px;">
+                        <div class="route" style="font-size:20px;">Revenue Management Specialist (m/w/d)</div>
+                        <div class="date">Hamburg · Vollzeit</div>
+                        <div class="price" style="margin-top:10px;">Bewerbungsfrist: laufend</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top:40px !important;">Warum DenkAir?</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <h4 style="margin-top:0;">Flat hierarchies</h4>
+                <p style="color:#3A3A3A;">Schnelle Entscheidungen, kurze Wege.</p>
+            </div>
+            <div class="col-md-4">
+                <h4 style="margin-top:0;">Mitarbeitertarife</h4>
+                <p style="color:#3A3A3A;">Reisen zu stark vergünstigten Preisen — auch für Familie.</p>
+            </div>
+            <div class="col-md-4">
+                <h4 style="margin-top:0;">Weiterbildung</h4>
+                <p style="color:#3A3A3A;">Interne Academy, externe Schulungen, Sprachkurse.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

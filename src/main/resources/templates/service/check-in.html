@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Online Check-in — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="page-header-section">
+    <div class="container">
+        <h1>Online Check-in</h1>
+        <p class="lead">Stressfrei zum Gate — in unter zwei Minuten online einchecken.</p>
+    </div>
+</section>
+
+<section class="flight-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h2 class="section-title">So einfach geht's</h2>
+                <ol style="font-size:16px; line-height:1.8;">
+                    <li>Ab 24 Stunden bis 45 Minuten vor Abflug verfügbar.</li>
+                    <li>Buchungsnummer (z.&nbsp;B. <code>HA-ABCDE</code>) und Nachnamen bereithalten.</li>
+                    <li>Boardkarte als PDF zum Speichern oder direkt auf dem Handy.</li>
+                    <li>Gepäck zur Gepäckabgabe bringen (spätestens 60 Minuten vor Abflug).</li>
+                </ol>
+
+                <h2 class="section-title" style="margin-top:40px !important;">Hinweise</h2>
+                <p style="font-size:15px; line-height:1.7;">
+                    Für bestimmte Routen (USA, Großbritannien, ausgewählte Nordafrika-Flüge) ist der
+                    Online Check-in nicht möglich. Dann bitte am Flughafen-Schalter einchecken, spätestens
+                    90 Minuten vor Abflug.
+                </p>
+                <p style="font-size:15px; line-height:1.7;">
+                    Passagiere mit Sondergepäck, Kleinkindern unter 2 Jahren oder medizinischem Bedarf
+                    werden ebenfalls am Schalter bedient.
+                </p>
+            </div>
+            <div class="col-md-5">
+                <img src="https://picsum.photos/seed/denkair-checkin/800/600" alt="" class="flight-hero">
+
+                <div class="flight-summary" style="margin-top:24px;">
+                    <strong>Buchungsnummer eingeben</strong><br>
+                    <form action="#" method="get" style="margin-top:10px;">
+                        <input type="text" class="form-control" placeholder="HA-ABCDE" style="margin-bottom:10px;">
+                        <input type="text" class="form-control" placeholder="Nachname" style="margin-bottom:10px;">
+                        <button class="btn btn-primary btn-block">Einchecken</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

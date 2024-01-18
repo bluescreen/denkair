@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Reiseziele — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="page-header-section">
+    <div class="container">
+        <h1>Reiseziele</h1>
+        <p class="lead">Die beliebtesten Sonnenziele von DenkAir — direkt entdecken.</p>
+    </div>
+</section>
+
+<section class="schnaeppchen">
+    <div class="container">
+        <h2 class="section-title">Unsere Top-Reiseziele</h2>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/ziele/palma-mallorca}">
+                    <img src="https://picsum.photos/seed/pmi/800/600" alt="Palma de Mallorca">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Palma de Mallorca</div>
+                        <div class="date">Spanien · Balearen</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/ziele/antalya}">
+                    <img src="https://picsum.photos/seed/ayt/800/600" alt="Antalya">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Antalya</div>
+                        <div class="date">Türkei · Türkische Riviera</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/ziele/gran-canaria}">
+                    <img src="https://picsum.photos/seed/lpa/800/600" alt="Gran Canaria">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Gran Canaria</div>
+                        <div class="date">Spanien · Kanaren</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/ziele/kreta}">
+                    <img src="https://picsum.photos/seed/her/800/600" alt="Kreta">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Kreta</div>
+                        <div class="date">Griechenland</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/ziele/hurghada}">
+                    <img src="https://picsum.photos/seed/hrg/800/600" alt="Hurghada">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Hurghada</div>
+                        <div class="date">Ägypten · Rotes Meer</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/ziele/faro}">
+                    <img src="https://picsum.photos/seed/fao/800/600" alt="Faro">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Faro</div>
+                        <div class="date">Portugal · Algarve</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

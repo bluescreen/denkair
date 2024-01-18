@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head(${title})"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="hero hero-sun" th:style="|background-image:url('https://picsum.photos/seed/${slug}-hero/1920/720');|">
+    <div class="container">
+        <div class="hero-caption">
+            <span class="eyebrow" style="display:inline-block;background:#F7A600;color:#1A1A1A;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;padding:6px 12px;border-radius:2px;margin-bottom:18px;"
+                  th:text="${airport.country + ' · ' + airport.iata}"></span>
+            <h1 th:text="${airport.city}">Ziel</h1>
+            <p th:text="${teaser}">Teaser</p>
+            <div th:if="${fromPrice}" style="margin-top:10px;">
+                <span style="font-size:18px;">ab
+                    <strong style="font-size:32px;font-weight:800;" th:text="|${#numbers.formatDecimal(fromPrice,1,'POINT',2,'COMMA')} €|"></strong>
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="flight-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h2 class="section-title" th:text="${title}">Reiseziel</h2>
+                <p style="font-size:16px; line-height:1.7;" th:text="${teaser}"></p>
+
+                <h2 class="section-title" style="margin-top:40px !important;">Highlights</h2>
+                <ul style="font-size:15px; line-height:1.9;">
+                    <li th:each="h : ${highlights}" th:text="${h}">Highlight</li>
+                </ul>
+            </div>
+            <div class="col-md-5">
+                <img th:src="|https://picsum.photos/seed/${slug}-side/900/600|" class="flight-hero" alt="">
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top:60px !important;">Flüge nach <span th:text="${airport.city}"></span></h2>
+
+        <div th:if="${flights.isEmpty()}" class="alert" style="background:#F4F4F4; border:1px solid #E5E5E5; padding:18px; border-radius:4px;">
+            Aktuell keine Direktflüge. Bitte prüfen Sie die <a th:href="@{/flights}">Flugsuche</a>.
+        </div>
+
+        <div class="flight-row" th:each="f : ${flights}">
+            <img th:src="${f.imageUrl}" class="flight-thumb" alt="">
+            <div class="flight-meta">
+                <div class="flight-number" th:text="${f.flightNumber}">HA</div>
+                <div class="route">
+                    <strong th:text="${f.origin.iata}"></strong>
+                    <i class="fa fa-long-arrow-right"></i>
+                    <strong th:text="${f.destination.iata}"></strong>
+                </div>
+                <div class="time">
+                    <span th:text="${#temporals.format(f.departure, 'dd.MM.yyyy HH:mm')}"></span>
+                </div>
+            </div>
+            <div class="flight-price">
+                <div class="price" th:text="|${#numbers.formatDecimal(f.preis,1,'POINT',2,'COMMA')} €|">—</div>
+                <a class="btn btn-primary" th:href="@{/flights/{id}(id=${f.id})}">Buchen</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

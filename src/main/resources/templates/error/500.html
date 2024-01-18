@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Fehler — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="booking-confirmation" style="background:#fff;">
+    <div class="container text-center">
+        <div style="font-size:96px; font-weight:800; color:#F7A600; line-height:1;">500</div>
+        <h1 style="margin-top:20px;">Da ist uns etwas durch die Lappen gegangen.</h1>
+        <p class="lead" style="color:#3A3A3A;">
+            Ein unerwarteter Fehler ist aufgetreten. Unsere Techniker wurden benachrichtigt.
+        </p>
+        <p style="margin-top:20px;">
+            <a class="btn btn-primary btn-lg" th:href="@{/}">Zur Startseite</a>
+            <a class="btn btn-default btn-lg" th:href="@{/kontakt}" style="margin-left:10px;">Kontakt</a>
+        </p>
+        <p style="margin-top:30px; font-size:12px; color:#8B8B8B;">
+            Bei anhaltenden Problemen wenden Sie sich bitte an unser Service-Team.
+        </p>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

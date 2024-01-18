@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('Service — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="page-header-section">
+    <div class="container">
+        <h1>Service</h1>
+        <p class="lead">Alles rund um Ihre Reise mit DenkAir.</p>
+    </div>
+</section>
+
+<section class="schnaeppchen">
+    <div class="container">
+        <h2 class="section-title">Vor dem Flug</h2>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/service/check-in}">
+                    <img src="https://picsum.photos/seed/service-checkin/600/400" alt="">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Online Check-in</div>
+                        <div class="date">24 Stunden vor Abflug</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/service/gepaeck}">
+                    <img src="https://picsum.photos/seed/service-gepaeck/600/400" alt="">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Gepäck</div>
+                        <div class="date">Freigepäck &amp; Sondergepäck</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/service/mein-flug}">
+                    <img src="https://picsum.photos/seed/service-meinflug/600/400" alt="">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Mein Flug</div>
+                        <div class="date">Status, Umbuchung, Sitzplatz</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top:40px !important;">Hilfe &amp; Kontakt</h2>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/faq}">
+                    <img src="https://picsum.photos/seed/service-faq/600/400" alt="">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">FAQ</div>
+                        <div class="date">Häufig gestellte Fragen</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <a class="offer-card" th:href="@{/kontakt}">
+                    <img src="https://picsum.photos/seed/service-kontakt/600/400" alt="">
+                    <div class="offer-body">
+                        <div class="route" style="font-size:22px;">Kontakt</div>
+                        <div class="date">Service-Team erreichen</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

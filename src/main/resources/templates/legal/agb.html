@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head('AGB — DenkAir')"></head>
+<body>
+
+<nav th:replace="fragments/header :: nav"></nav>
+
+<section class="page-header-section">
+    <div class="container">
+        <h1>Allgemeine Beförderungsbedingungen</h1>
+        <p class="lead">Gültig für alle Flüge der DenkAir GmbH.</p>
+    </div>
+</section>
+
+<section class="flight-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <h2 class="section-title">§1 Geltungsbereich</h2>
+                <p style="font-size:15px; line-height:1.8;">
+                    Diese Bedingungen gelten für alle Flüge, die von DenkAir oder in ihrem Auftrag
+                    durchgeführt werden. Abweichende Bestimmungen eines Reisevertrags gehen diesen Bedingungen
+                    im Zweifel vor.
+                </p>
+
+                <h2 class="section-title">§2 Tickets und Buchung</h2>
+                <p style="font-size:15px; line-height:1.8;">
+                    Die Buchung kommt mit Bestätigung durch DenkAir zustande. Tickets sind personengebunden
+                    und nicht übertragbar. Der Ticketpreis umfasst Beförderung, gesetzliche Steuern und
+                    Gebühren sowie gegebenenfalls tarifabhängige Leistungen.
+                </p>
+
+                <h2 class="section-title">§3 Check-in</h2>
+                <p style="font-size:15px; line-height:1.8;">
+                    Der Online-Check-in ist ab 24 Stunden bis 45 Minuten vor Abflug möglich. Am Schalter
+                    bis spätestens 60 Minuten vor Abflug. Verspätet eintreffende Passagiere haben keinen
+                    Anspruch auf Beförderung.
+                </p>
+
+                <h2 class="section-title">§4 Gepäckbeförderung</h2>
+                <p style="font-size:15px; line-height:1.8;">
+                    Gewichtsgrenzen und Stückzahlen richten sich nach dem gebuchten Tarif
+                    (siehe <a th:href="@{/service/gepaeck}">Gepäck</a>). Für Sondergepäck gelten gesonderte Gebühren.
+                </p>
+
+                <h2 class="section-title">§5 Umbuchung und Stornierung</h2>
+                <p style="font-size:15px; line-height:1.8;">
+                    Umbuchungen sind tarifabhängig möglich. Stornierungen werden nach den im
+                    Tarif vereinbarten Bedingungen abgerechnet. Rückerstattungen erfolgen grundsätzlich auf das
+                    ursprünglich verwendete Zahlungsmittel.
+                </p>
+
+                <h2 class="section-title">§6 Haftung</h2>
+                <p style="font-size:15px; line-height:1.8;">
+                    Die Haftung richtet sich nach dem Montrealer Übereinkommen sowie den Vorschriften
+                    der Verordnung (EG) Nr. 261/2004 über Ausgleichs- und Unterstützungsleistungen
+                    bei Nichtbeförderung, Annullierung oder großer Verspätung.
+                </p>
+
+                <h2 class="section-title">§7 Gerichtsstand</h2>
+                <p style="font-size:15px; line-height:1.8;">
+                    Gerichtsstand für alle Streitigkeiten ist Hamburg, soweit gesetzlich zulässig.
+                </p>
+
+                <p style="font-size:13px; color:#8B8B8B; margin-top:40px;">
+                    Fassung: Januar 2024
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
