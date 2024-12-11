@@ -31,3 +31,9 @@ target/
 
 ### VS Code ###
 .vscode/
+
+### OS + runtime junk ###
+.DS_Store
+.app.pid
+logs/
+*.class
