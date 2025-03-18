@@ -1,0 +1,18 @@
+services:
+  denkair:
+    build: .
+    image: denkair-booking:local
+    container_name: denkair-booking
+    ports:
+      - "8080:8080"
+    environment:
+      SERVER_PORT: 8080
+      SPRING_PROFILES_ACTIVE: default
+      JAVA_OPTS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
