@@ -1,58 +1,56 @@
 package de.denkair.booking.service;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Tests fuer den PreisCalculator. Halbfertig.
- * akin 2019 — wollte die Runden-Regel aus der Buchhaltung nachbauen, kam nicht dazu.
- *
- * TODO: applyDiscount testen
- * TODO: Edge-Case 0 Passagiere (wirft aktuell nichts, sollte aber)
- * TODO: Negative Preise — kommt aus dem Partner-Feed manchmal
- */
-public class PreisCalculatorTest {
+class PreisCalculatorTest {
 
     private PreisCalculator calc;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         calc = new PreisCalculator();
     }
 
     @Test
-    public void berechnePreisSinglePassenger() {
-        BigDecimal total = calc.berechnePreis(new BigDecimal("100.00"), 1);
-        // 100 + 19% = 119.00
-        assertEquals(new BigDecimal("119.00"), total);
+    void berechnePreisSinglePassenger() {
+        assertEquals(new BigDecimal("119.00"), calc.berechnePreis(new BigDecimal("100.00"), 1));
     }
 
     @Test
-    public void berechnePreisReturnsNotNull() {
-        // "Smoke test" — soll nur sicherstellen dass ueberhaupt was rauskommt
-        assertNotNull(calc.berechnePreis(new BigDecimal("50.00"), 2));
-        assertTrue(true); // TODO echte Assertions nachziehen
+    void berechnePreisMultiplePassengers() {
+        // 100 * 3 = 300 net + 19% = 357.00
+        assertEquals(new BigDecimal("357.00"), calc.berechnePreis(new BigDecimal("100.00"), 3));
     }
 
-    @Ignore("HA-1803: Steuer-Regel wurde 2021 geaendert, Test noch nicht angepasst")
     @Test
-    public void getSteuerIsNineteenPercent() {
-        BigDecimal steuer = calc.getSteuer(new BigDecimal("100.00"));
-        assertEquals(new BigDecimal("19.00"), steuer);
+    void berechnePreisZeroPassengersIsZero() {
+        // Documents current (buggy) behaviour: zero passengers => zero price, no exception.
+        assertEquals(new BigDecimal("0.00"), calc.berechnePreis(new BigDecimal("100.00"), 0));
     }
 
-    // @Test
-    // public void applyDiscountTenPercent() {
-    //     // commented out — Discount-Logik ist in DiscountRules und nicht hier.
-    //     // jens 2020: "hierher verschieben wenn Zeit"
-    //     BigDecimal off = calc.applyDiscount(new BigDecimal("100.00"), 10);
-    //     assertEquals(new BigDecimal("90.00"), off);
-    // }
+    @Test
+    void getSteuerIsNineteenPercent() {
+        assertEquals(0, new BigDecimal("19.0000").compareTo(calc.getSteuer(new BigDecimal("100.00"))));
+    }
+
+    @Test
+    void applyDiscountTenPercent() {
+        // 100 * (100-10)/100 = 90
+        assertEquals(0, new BigDecimal("90.00").compareTo(calc.applyDiscount(new BigDecimal("100.00"), 10)));
+    }
+
+    @Test
+    void applyDiscountZeroUnchanged() {
+        assertEquals(0, new BigDecimal("100.00").compareTo(calc.applyDiscount(new BigDecimal("100.00"), 0)));
+    }
+
+    @Test
+    void applyDiscountHundredGivesZero() {
+        assertEquals(0, BigDecimal.ZERO.compareTo(calc.applyDiscount(new BigDecimal("100.00"), 100)));
+    }
 }
