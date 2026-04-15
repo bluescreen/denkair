@@ -65,13 +65,28 @@ test:
 .PHONY: e2e
 e2e:
 	@echo ">>> Cucumber E2E (Spring Boot random port, seeded H2,"
-	@echo "    HTTP + headless Chrome via Selenium for @browser scenarios)"
+	@echo "    HTTP + headless Chrome via Selenium for @browser scenarios,"
+	@echo "    GreenMail SMTP on 127.0.0.1:3025 for captured emails)"
 	$(MVN) test-compile failsafe:integration-test failsafe:verify \
 	       -Dit.test=E2EIT
 	@echo ""
 	@echo "  Report:   target/cucumber-report.html"
+	@echo "  Emails:   target/e2e-mails/index.html  ('make e2e-mails' to open)"
 	@echo "  Features: src/test/resources/features/*.feature"
 	@echo "  Tip:      E2E_SKIP_BROWSER=1 make e2e   (HTTP only, skip Selenium)"
+
+# -------------------------------------------------------------------
+# e2e-mails — render captured confirmation mails in the browser
+# -------------------------------------------------------------------
+.PHONY: e2e-mails
+e2e-mails:
+	@if [ ! -f target/e2e-mails/index.html ]; then \
+	  echo "No index.html found — running 'make e2e' first."; \
+	  $(MAKE) e2e; \
+	fi
+	@command -v open >/dev/null && open target/e2e-mails/index.html || \
+	 command -v xdg-open >/dev/null && xdg-open target/e2e-mails/index.html || \
+	 echo "Open manually: target/e2e-mails/index.html"
 
 # -------------------------------------------------------------------
 # tests — ausfuehrlicher als 'test', mit Brownfield-Report danach
