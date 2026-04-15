@@ -25,7 +25,8 @@ help:
 	@echo "  make logs          tail -f auf die Run-Ausgabe"
 	@echo "  make build         mvn compile"
 	@echo "  make package       mvn package (baut das jar in target/)"
-	@echo "  make test          mvn test"
+	@echo "  make test          mvn test (unit + JaCoCo)"
+	@echo "  make e2e           Gherkin/Cucumber E2E tests via maven-failsafe"
 	@echo "  make clean         mvn clean + logs/*"
 	@echo "  make probe         curl gegen die wichtigsten Endpoints"
 	@echo "  make open          Browser auf http://localhost:$(PORT)"
@@ -52,6 +53,22 @@ package:
 .PHONY: test
 test:
 	$(MVN) test
+
+# -------------------------------------------------------------------
+# e2e — Cucumber/Gherkin scenarios vs. a real Spring Boot context
+# -------------------------------------------------------------------
+# Features:   src/test/resources/features/*.feature
+# Steps:      src/test/java/de/denkair/booking/e2e/*.java
+# Runner:     E2EIT (failsafe picks up *IT.java)
+# Report:     target/cucumber-report.html
+.PHONY: e2e
+e2e:
+	@echo ">>> Cucumber E2E (Spring Boot random port, seeded H2)"
+	$(MVN) test-compile failsafe:integration-test failsafe:verify \
+	       -Dit.test=E2EIT
+	@echo ""
+	@echo "  Report: target/cucumber-report.html"
+	@echo "  Features: src/test/resources/features/*.feature"
 
 # -------------------------------------------------------------------
 # tests — ausfuehrlicher als 'test', mit Brownfield-Report danach

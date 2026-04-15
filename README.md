@@ -23,6 +23,7 @@ make stop / restart / status / logs
 make probe        # curl every public route
 make test         # unit + coverage (JaCoCo)
 make tests        # brownfield report with @Disabled / TODO breadcrumbs
+make e2e          # Gherkin/Cucumber end-to-end scenarios (real HTTP)
 ```
 
 Open <http://localhost:8080> · H2 console at `/h2-console` · Swagger at `/swagger-ui.html` · Actuator at `/actuator`.
@@ -46,6 +47,7 @@ All living documentation is under [`docs/`](docs/):
 | [`docs/RUNBOOK.md`](docs/RUNBOOK.md) | Operational runbook (payments, SAP, mail, incident trails) |
 | [`docs/PARTNER_INTEGRATION.md`](docs/PARTNER_INTEGRATION.md) | Partner (TUI/DER) integration notes |
 | [`docs/TEST_COVERAGE.md`](docs/TEST_COVERAGE.md) | Coverage baseline → 94.6% line / 80.2% branch, exclusions, surfaced bugs |
+| [`docs/E2E_TESTS.md`](docs/E2E_TESTS.md) | Cucumber/Gherkin E2E suite — features, steps vocabulary, how to add scenarios |
 | [`FIRST_STEPS.md`](FIRST_STEPS.md) | 30-second orientation for workshop attendees |
 | [`WORKSHOP_NOTES.md`](WORKSHOP_NOTES.md) | Instructor playbook |
 
@@ -59,6 +61,7 @@ JaCoCo-backed test suite: **163 tests**, 2 `@Disabled` (both documented), 0 fail
 - Report: `target/site/jacoco/index.html` after `mvn test`
 - Exclusions: `legacy/` integrations (Sabre/SAP/FTP/MailHelper/LegacyBookingDao), `scheduled/`, `filter/`, `config/`, `BookingApplication`, `fluginfo/` — see `docs/TEST_COVERAGE.md` for rationale
 - Test slices: Mockito units for services, `@WebMvcTest` for every controller, `@DataJpaTest` for repositories, JSR-303 validation for DTOs
+- **E2E:** 10 Gherkin/Cucumber scenarios via `make e2e` — full Spring context on random port, real HTTP. See `docs/E2E_TESTS.md`.
 
 ## Security
 
