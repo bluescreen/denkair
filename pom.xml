@@ -298,6 +298,15 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <denkair.log.dir>${project.build.directory}/test-logs</denkair.log.dir>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.11</version>
@@ -319,11 +328,11 @@
                         <exclude>de/denkair/booking/scheduled/**</exclude>
                         <exclude>de/denkair/booking/filter/**</exclude>
                         <exclude>de/denkair/fluginfo/**</exclude>
-                        <exclude>de/denkair/booking/legacy/FtpManifestUploader.class</exclude>
-                        <exclude>de/denkair/booking/legacy/SapConnector.class</exclude>
-                        <exclude>de/denkair/booking/legacy/SabreGdsClient.class</exclude>
-                        <exclude>de/denkair/booking/legacy/MailHelper.class</exclude>
-                        <exclude>de/denkair/booking/legacy/LegacyBookingDao.class</exclude>
+                        <exclude>de/denkair/booking/legacy/FtpManifestUploader*</exclude>
+                        <exclude>de/denkair/booking/legacy/SapConnector*</exclude>
+                        <exclude>de/denkair/booking/legacy/SabreGdsClient*</exclude>
+                        <exclude>de/denkair/booking/legacy/MailHelper*</exclude>
+                        <exclude>de/denkair/booking/legacy/LegacyBookingDao*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
