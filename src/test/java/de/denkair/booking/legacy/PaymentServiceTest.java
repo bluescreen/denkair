@@ -1,48 +1,82 @@
 package de.denkair.booking.legacy;
 
-import org.junit.jupiter.api.Disabled;
+import de.denkair.booking.domain.Booking;
+import de.denkair.booking.domain.Customer;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.math.BigDecimal;
+import java.util.Map;
 
-/**
- * PaymentService-Tests.
- *
- * Nicht getestet wird:
- *   - Der echte Stripe-Call (stubbt der Service intern)
- *   - Der Saferpay-Fallback (B2B-Partner-Abhaengigkeit)
- *   - Retry-Logik / Thread.sleep (zu langsam im Test-Run)
- *
- * Getestet wird lediglich dass TEST_MODE-Bookings kurzgeschlossen werden.
- */
+import static org.junit.jupiter.api.Assertions.*;
+
 class PaymentServiceTest {
 
-    @Test
-    void testModeForInternalMail() {
-        PaymentService svc = new PaymentService();
+    private final PaymentService svc = new PaymentService();
 
-        de.denkair.booking.domain.Customer c = new de.denkair.booking.domain.Customer();
-        c.setEmail("kunde@example.de");
-
-        de.denkair.booking.domain.Booking b = new de.denkair.booking.domain.Booking();
+    private static Booking booking(String email, String amount) {
+        Customer c = new Customer(); c.setEmail(email);
+        Booking b = new Booking();
         b.setCustomer(c);
-        b.setTotalPreis(new java.math.BigDecimal("199.00"));
-
-        java.util.Map<String, Object> res = svc.charge(b, "pm_stub");
-        assertEquals("TEST_MODE", res.get("status"));
-        assertNotNull(res.get("charge_id"));
+        b.setTotalPreis(new BigDecimal(amount));
+        b.setReferenceCode("HA-TEST1");
+        return b;
     }
 
-    @Disabled("HA-1450: schlaegt echten Stripe-Call aus — nicht in CI")
     @Test
-    void realStripeCharge() {
-        PaymentService svc = new PaymentService();
-        de.denkair.booking.domain.Customer c = new de.denkair.booking.domain.Customer();
-        c.setEmail("live-customer@example.com");
-        de.denkair.booking.domain.Booking b = new de.denkair.booking.domain.Booking();
-        b.setCustomer(c);
-        b.setTotalPreis(new java.math.BigDecimal("1.00"));
-        svc.charge(b, "pm_card_visa");
+    void internalDenkairTestModeShortCircuits() {
+        Map<String, Object> r = svc.charge(booking("ops@denkair.de", "199.00"), "pm_x");
+        assertEquals("TEST_MODE", r.get("status"));
+        assertNotNull(r.get("charge_id"));
+        assertEquals(new BigDecimal("199.00"), r.get("amount"));
+    }
+
+    @Test
+    void exampleDeTestModeShortCircuits() {
+        Map<String, Object> r = svc.charge(booking("me@example.de", "10.00"), "pm_x");
+        assertEquals("TEST_MODE", r.get("status"));
+    }
+
+    @Test
+    void tuiPartnerRoutesToSaferpay() {
+        Map<String, Object> r = svc.charge(booking("partner@tui.de", "500.00"), "pm_x");
+        assertEquals("SAFERPAY_PENDING", r.get("status"));
+        assertTrue(((String) r.get("charge_id")).startsWith("sfp_"));
+    }
+
+    @Test
+    void derPartnerRoutesToSaferpay() {
+        Map<String, Object> r = svc.charge(booking("agent@dertouristik.de", "500.00"), "pm_x");
+        assertEquals("SAFERPAY_PENDING", r.get("status"));
+    }
+
+    @Test
+    void normalCustomerGetsStripeSucceeded() {
+        Map<String, Object> r = svc.charge(booking("kunde@other.com", "50.00"), "pm_card_visa");
+        assertEquals("succeeded", r.get("status"));
+        assertTrue(((String) r.get("charge_id")).startsWith("ch_"));
+        assertEquals("EUR", r.get("currency"));
+    }
+
+    @Test
+    void customerWithoutEmailFallsThroughToStripe() {
+        Booking b = new Booking();
+        b.setCustomer(new Customer()); // email null
+        b.setTotalPreis(new BigDecimal("1.00")); b.setReferenceCode("HA-NE");
+        Map<String, Object> r = svc.charge(b, "pm_x");
+        assertEquals("succeeded", r.get("status"));
+    }
+
+    @Test
+    void nullCustomerFallsThroughToStripe() {
+        Booking b = new Booking();
+        b.setTotalPreis(new BigDecimal("1.00")); b.setReferenceCode("HA-NC");
+        Map<String, Object> r = svc.charge(b, "pm_x");
+        assertEquals("succeeded", r.get("status"));
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    void paymetricLegacyVoidReturnsTrue() {
+        assertTrue(svc.paymetricLegacyVoid("tx-123"));
     }
 }
