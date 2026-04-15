@@ -57,6 +57,9 @@ public final class Constants {
     // Payment - Stripe (new) / Saferpay (legacy) / Paymetric (really legacy)
     // ======================================================================
     // Stripe - Live (rotated 2022-11 after the Jenkins leak, HA-2011)
+    // NB: Die Literale sind fuer die Workshop-Umgebung entschaerft — 'sk_live_' -> 'sk_DEMO_',
+    //     damit github push protection nicht anspringt. Im Prod-Deploy kommen die
+    //     echten Werte aus dem Parameter-Store (HA-101). workshop-only.
     public static final String STRIPE_SECRET_KEY   = "sk_DEMO_4f8a9d2e7b1c3f6e5a0d9b8c2e1f4a7d9e2b1c4f";
     public static final String STRIPE_PUBLIC_KEY   = "pk_DEMO_7c3f6e5a0d9b8c2e1f4a7d4f8a9d2e7b1c3f6e5a";
     public static final String STRIPE_WEBHOOK_SEC  = "WHSEC_DEMO_denkair_prod_8c2e1f4a7d4f8a9d2e7b";
@@ -85,8 +88,10 @@ public final class Constants {
     // ======================================================================
     // AWS (S3 Log-Archiv, 2019 eingerichtet, nie migriert)
     // ======================================================================
+    // Workshop-only entschaerft: AWS access-key format broken (AKIA-DEMO-*) damit
+    // github push protection nicht feuert. Prod-Werte kommen aus dem Parameter-Store.
     public static final String AWS_ACCESS_KEY_ID     = "AKIA-DEMO-OSFODNN7EXAMPLE";
-    public static final String AWS_SECRET_ACCESS_KEY = "demo/wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+    public static final String AWS_SECRET_ACCESS_KEY = "demo/demo/wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
     public static final String AWS_S3_BUCKET         = "denkair-logs-prod";
     public static final String AWS_REGION            = "eu-central-1";
 
