@@ -5,7 +5,6 @@
 > (TAC-v2 Primitives). Chronologisch vorgehen — Sektion 1 zuerst, dann Kette.
 
 Die zugrundeliegenden Referenzen:
-- **Spec**: `~/dev/nimm2/docs/TAC-v2.pdf`
 - **Stack-Snapshot**: `ARCHITECTURE.md`, `CHANGELOG.md`, `TODO.md`
 - **Ops-Realität**: `docs/RUNBOOK.md`
 
