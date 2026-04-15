@@ -56,6 +56,24 @@ Die zugrundeliegenden Referenzen:
 6. `.gitignore` muss `application-*.properties` für alle Nicht-Defaults enthalten.
 7. **History-Scrub** optional aber empfohlen: `git filter-repo` für sensitive Historie.
 
+### 🔧 Werkzeug — **trufflehog**, nicht `grep`
+
+`grep` findet "sk_live" wenn Sie danach suchen. `trufflehog` findet ~800 Secret-Typen, inkl. **Live-Verifikation**:
+
+```bash
+make scan-secrets            # Filesystem, schnell, offline
+make scan-secrets-verify     # mit Live-API-Verifikation (langsamer)
+make scan-history            # alle 32 commits abklopfen
+```
+
+Findings-Stufen:
+
+- 🐷🔑 **verified** — Credential ist **live, funktioniert**. Incident. Rotieren, vor allem anderen.
+- 🐷🔑❓ **unverified** — Pattern matcht, Endpoint aber nicht erreichbar (interne Hosts — bei uns: JDBC-Strings mit `denkair.internal`).
+- *kein Finding* — matcht kein bekanntes Shape.
+
+Vor Rotation: `make scan-history`. Wenn in einem früheren Commit ein echter Schlüssel lag, nützt Rotation allein nichts — der Commit-Blob bleibt öffentlich. Dann: **rotate at provider + BFG/filter-repo + force-push + notify**.
+
 ### 🛠 Agentisch (TAC-v2)
 
 **Schlechter Prompt:**
@@ -68,11 +86,12 @@ Der Agent ändert 1 Stelle, meldet "done". In Wahrheit leben die Keys noch in:
 - `docs/PARTNER_INTEGRATION.md` als Beispiel
 - `SecurityConfig.JWT_SECRET` (referenziert aus Constants)
 - Prod-SAP-Logs
+- **Historie jedes Commits** — trufflehog weiss's, der Agent nicht.
 
 **Besser** — **§4 Spec Prompt** vor jeder Aktion:
-> "Spec erst. Grep alle Vorkommen von `sk_live_`, `STRIPE_SECRET`, `stripe.*key`
-> über Code **und Docs**. Liste alle Pfade. Dann Plan: welche Rotation erfordert
-> Produktionskoordination, welche nicht. Erst danach Code ändern."
+> "Baseline: `make scan-history` + `make scan-secrets`. Liste aller Findings
+> nach Pfad. Dann Plan: welche Rotation erfordert Produktionskoordination, welche
+> nicht. Erst danach Code ändern."
 
 **Best-Of-Kombi:**
 1. **PreToolUse-Hook** (§6) blockiert Edits an `application-prod.properties` und `Constants.java` ohne explizite Bestätigung.
@@ -81,8 +100,15 @@ Der Agent ändert 1 Stelle, meldet "done". In Wahrheit leben die Keys noch in:
 
 ### Übung
 Frage: **"Wie viele Secrets sind in diesem Repo?"**
-Ziel: **≥40** (Constants + properties + JSP + docs + SecurityConfig).
-Generator allein findet ca. 10. Mit Evaluator-Pass (security-review skill) → 35+.
+
+**Drei Runden:**
+1. Agent nur mit `grep` — findet ca. 10, viele False-Negatives bei obfuscated keys.
+2. Agent mit `make scan-secrets` — findet alle strukturierten Shapes (JDBC, API-Keys).
+3. Agent mit Three-Agent-Harness (§7) + `make scan-secrets-verify` + Evaluator-Sicht — findet auch die *unstructured* (String-Constants mit Namen wie `STRIPE_SECRET_KEY`, die nicht auf die Standard-Regex matchen).
+
+**Ziel: ~40 credential-shaped strings** (Constants + properties + JSP + docs + SecurityConfig + persistence.xml).
+
+Das Erkenntnis-Moment ist meist: `make scan-history` auf einem **echten** Projekt. Was man in Runde 3 findet, ist oft schon seit Jahren in der Welt.
 
 ---
 

@@ -1,0 +1,7 @@
+# Paths trufflehog should skip.
+# target/ is Maven build output, enthaelt Kopien der Ressourcen — wuerde jeden
+# Fund verdoppeln. node_modules + logs aus dem gleichen Grund.
+target/
+node_modules/
+logs/
+.mvn/wrapper/maven-wrapper.jar

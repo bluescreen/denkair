@@ -30,6 +30,11 @@ help:
 	@echo "  make probe         curl gegen die wichtigsten Endpoints"
 	@echo "  make open          Browser auf http://localhost:$(PORT)"
 	@echo ""
+	@echo "  Security:"
+	@echo "    make scan-secrets          trufflehog filesystem scan (fast, offline)"
+	@echo "    make scan-secrets-verify   trufflehog mit live-verifikation"
+	@echo "    make scan-history          trufflehog git history scan"
+	@echo ""
 	@echo "Optional:   PROFILE=prod make run"
 	@echo "            PORT=9090  make run"
 
@@ -178,3 +183,41 @@ open:
 	@command -v open >/dev/null && open "http://localhost:$(PORT)" || \
 	 command -v xdg-open >/dev/null && xdg-open "http://localhost:$(PORT)" || \
 	 echo "Bitte http://localhost:$(PORT) manuell im Browser oeffnen."
+
+# -------------------------------------------------------------------
+# Secret-Scanning mit trufflehog
+# -------------------------------------------------------------------
+# Installation:
+#   macOS:  brew install trufflesecurity/trufflehog/trufflehog
+#   docker: docker run --rm -v "$(PWD):/pwd" trufflesecurity/trufflehog filesystem /pwd
+#
+# Verified findings (🐷🔑) = credential ist LIVE — incident response.
+# Unverified (🐷🔑❓) = pattern matched, aber endpoint nicht erreichbar.
+TRUFFLEHOG ?= trufflehog
+
+.PHONY: scan-secrets
+scan-secrets:
+	@command -v $(TRUFFLEHOG) >/dev/null 2>&1 || { \
+	  echo "trufflehog nicht installiert."; \
+	  echo "  macOS:  brew install trufflesecurity/trufflehog/trufflehog"; \
+	  echo "  docker: docker run --rm -v \"\$$PWD:/pwd\" trufflesecurity/trufflehog filesystem /pwd"; \
+	  exit 1; \
+	}
+	@echo ">>> trufflehog filesystem (current working tree, ohne target/)"
+	-@$(TRUFFLEHOG) filesystem . \
+	   --exclude-paths=.trufflehogignore \
+	   --no-update --no-verification 2>/dev/null
+	@echo ""
+	@echo "Tipp: 'make scan-secrets-verify' laeuft mit live-verifikation (langsamer)."
+
+.PHONY: scan-secrets-verify
+scan-secrets-verify:
+	@command -v $(TRUFFLEHOG) >/dev/null 2>&1 || { echo "trufflehog fehlt — siehe scan-secrets"; exit 1; }
+	@echo ">>> trufflehog filesystem MIT live-verifikation"
+	-@$(TRUFFLEHOG) filesystem . --exclude-paths=.trufflehogignore --no-update 2>/dev/null
+
+.PHONY: scan-history
+scan-history:
+	@command -v $(TRUFFLEHOG) >/dev/null 2>&1 || { echo "trufflehog fehlt — siehe scan-secrets"; exit 1; }
+	@echo ">>> trufflehog git history (alle commits, seit initial)"
+	-@$(TRUFFLEHOG) git file://. --no-update --no-verification 2>/dev/null
