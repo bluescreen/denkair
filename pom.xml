@@ -20,7 +20,22 @@
     <properties>
         <java.version>1.8</java.version>
         <jackson.version>2.10.2</jackson.version>
+        <selenium.version>4.15.0</selenium.version>
     </properties>
+
+    <!-- Spring Boot 2.2.6 pins selenium-* at 3.141.59. Override to the newer
+         set so the Java 4.x API (Duration-aware WebDriverWait, Selenium Manager) links. -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-bom</artifactId>
+                <version>${selenium.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -127,12 +142,13 @@
             <version>1.4</version>
         </dependency>
 
-        <!-- Guava eingefroren 2016. Ursprunglich 18.0, dann unter Druck auf 20.0 gehoben
-             als Springfox 2.9 NoSuchMethodError geworfen hat. Seitdem nicht mehr angefasst. -->
+        <!-- Guava — bumped from 20.0 (frozen since 2016) to 32.1.3-jre so Selenium 4.15
+             has the ImmutableSortedSet.toImmutableSortedSet API it needs for browser E2E.
+             If Springfox 2.9 starts throwing NoSuchMethodError again, pin it back here. -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>20.0</version>
+            <version>32.1.3-jre</version>
         </dependency>
 
         <!-- Joda-Time. Wir haben 2018 angefangen zu migrieren, es laeuft noch beides. -->
@@ -296,6 +312,16 @@
             <version>6.11.0</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Selenium for real-browser E2E scenarios. Selenium Manager (built in) resolves
+             the matching chromedriver at first run — requires network once. Opt out of
+             the browser scenarios with: make e2e E2E_SKIP_BROWSER=1 -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.15.0</version>
+            <scope>test</scope>
+        </dependency>
         <!-- JUnit 4 kept on the side because FlightServiceTest still needs it.
              New tests should use JUnit 5. TODO migrate the rest. -->
         <dependency>
@@ -323,6 +349,27 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Main sources stay at Java 1.8 (legacy compat); tests compile at 11
+                 so Selenium 4.x (browser E2E) links. Runtime is JDK 17 either way. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals><goal>testCompile</goal></goals>
+                        <configuration>
+                            <source>11</source>
+                            <target>11</target>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

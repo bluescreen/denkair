@@ -26,7 +26,8 @@ help:
 	@echo "  make build         mvn compile"
 	@echo "  make package       mvn package (baut das jar in target/)"
 	@echo "  make test          mvn test (unit + JaCoCo)"
-	@echo "  make e2e           Gherkin/Cucumber E2E tests via maven-failsafe"
+	@echo "  make e2e           Gherkin E2E: HTTP + real headless Chrome"
+	@echo "                      (E2E_SKIP_BROWSER=1 skips Selenium scenarios)"
 	@echo "  make clean         mvn clean + logs/*"
 	@echo "  make probe         curl gegen die wichtigsten Endpoints"
 	@echo "  make open          Browser auf http://localhost:$(PORT)"
@@ -63,12 +64,14 @@ test:
 # Report:     target/cucumber-report.html
 .PHONY: e2e
 e2e:
-	@echo ">>> Cucumber E2E (Spring Boot random port, seeded H2)"
+	@echo ">>> Cucumber E2E (Spring Boot random port, seeded H2,"
+	@echo "    HTTP + headless Chrome via Selenium for @browser scenarios)"
 	$(MVN) test-compile failsafe:integration-test failsafe:verify \
 	       -Dit.test=E2EIT
 	@echo ""
-	@echo "  Report: target/cucumber-report.html"
+	@echo "  Report:   target/cucumber-report.html"
 	@echo "  Features: src/test/resources/features/*.feature"
+	@echo "  Tip:      E2E_SKIP_BROWSER=1 make e2e   (HTTP only, skip Selenium)"
 
 # -------------------------------------------------------------------
 # tests — ausfuehrlicher als 'test', mit Brownfield-Report danach

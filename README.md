@@ -61,7 +61,7 @@ JaCoCo-backed test suite: **163 tests**, 2 `@Disabled` (both documented), 0 fail
 - Report: `target/site/jacoco/index.html` after `mvn test`
 - Exclusions: `legacy/` integrations (Sabre/SAP/FTP/MailHelper/LegacyBookingDao), `scheduled/`, `filter/`, `config/`, `BookingApplication`, `fluginfo/` — see `docs/TEST_COVERAGE.md` for rationale
 - Test slices: Mockito units for services, `@WebMvcTest` for every controller, `@DataJpaTest` for repositories, JSR-303 validation for DTOs
-- **E2E:** 10 Gherkin/Cucumber scenarios via `make e2e` — full Spring context on random port, real HTTP. See `docs/E2E_TESTS.md`.
+- **E2E:** 13 Gherkin/Cucumber scenarios via `make e2e` — full Spring context on random port, HTTP for 10 of them and **real headless Chrome (Selenium 4.15)** for the 3 `@browser`-tagged user-journey scenarios. Skip the browser ones with `E2E_SKIP_BROWSER=1`. See `docs/E2E_TESTS.md`.
 
 ## Security
 
